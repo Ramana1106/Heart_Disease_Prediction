@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction System</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px 35px;
+            border-radius: 15px;
+            width: 750px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #d32f2f;
+            box-shadow: 0 0 5px rgba(211, 47, 47, 0.3);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #d32f2f;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #b71c1c;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .high-risk {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .low-risk {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>❤️ Heart Disease Prediction</h1>
+    <p class="subtitle">Enter patient clinical details to predict heart disease risk</p>
+
+    <form action="/predict" method="post">
+        <div class="form-grid">
+
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" name="age" required>
+            </div>
+
+            <div class="input-group">
+                <label>Sex (1 = Male, 0 = Female)</label>
+                <input type="number" name="sex" required>
+            </div>
+
+            <div class="input-group">
+                <label>Chest Pain Type (0-3)</label>
+                <input type="number" name="cp" required>
+            </div>
+
+            <div class="input-group">
+                <label>Resting Blood Pressure</label>
+                <input type="number" name="trestbps" required>
+            </div>
+
+            <div class="input-group">
+                <label>Cholesterol (mg/dl)</label>
+                <input type="number" name="chol" required>
+            </div>
+
+            <div class="input-group">
+                <label>Fasting Blood Sugar (0/1)</label>
+                <input type="number" name="fbs" required>
+            </div>
+
+            <div class="input-group">
+                <label>Rest ECG (0-2)</label>
+                <input type="number" name="restecg" required>
+            </div>
+
+            <div class="input-group">
+                <label>Max Heart Rate (thalach)</label>
+                <input type="number" name="thalach" required>
+            </div>
+
+            <div class="input-group">
+                <label>Exercise Induced Angina (0/1)</label>
+                <input type="number" name="exang" required>
+            </div>
+
+            <div class="input-group">
+                <label>Oldpeak</label>
+                <input type="number" step="any" name="oldpeak" required>
+            </div>
+
+            <div class="input-group">
+                <label>Slope (0-2)</label>
+                <input type="number" name="slope" required>
+            </div>
+
+            <div class="input-group">
+                <label>Number of Vessels (ca 0-3)</label>
+                <input type="number" name="ca" required>
+            </div>
+
+            <div class="input-group full-width">
+                <label>Thal (0 = Normal, 1 = Fixed, 2 = Reversible)</label>
+                <input type="number" name="thal" required>
+            </div>
+
+        </div>
+
+        <button type="submit">🔍 Predict Heart Disease Risk</button>
+    </form>
+
+    {% if prediction_text %}
+        <div class="result {% if 'High Risk' in prediction_text %}high-risk{% else %}low-risk{% endif %}">
+            {{ prediction_text }}
+        </div>
+    {% endif %}
+
+    <footer>
+        ML Project | Heart Disease Prediction using Random Forest
+    </footer>
+</div>
+
+</body>
+</html>
